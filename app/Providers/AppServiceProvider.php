@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Classes\Repositories\UserRegistrationRepository;
 use App\Classes\Repositories\UserListRepository;
 use App\Classes\Repositories\ProductRegistrationRepository;
