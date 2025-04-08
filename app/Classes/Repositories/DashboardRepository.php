@@ -3,6 +3,7 @@
 namespace App\Classes\Repositories;
 
 use App\Models\Sale;
+use App\Models\Warehouse;
 use App\Models\Customer;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -58,6 +59,32 @@ class DashboardRepository implements DashboardInterface
 		->whereYear('updated_at', $currentYear)
 		->sum('total_price');
 
+
+		$thisMonth = now()->month;
+
+		// Get actual data from DB
+		$rawMonthlyTotals = Customer::selectRaw('MONTH(updated_at) as month, SUM(total_price) as total')
+			->whereNull('deleted_at')
+			->whereYear('updated_at', $currentYear)
+			->groupBy(DB::raw('MONTH(updated_at)'))
+			->pluck('total', 'month')
+			->toArray();
+
+		// Build final array with just values (0 for missing months)
+		$monthlyTotals = [];
+		for ($i = 1; $i <= $thisMonth; $i++) {
+			$monthlyTotals[] = isset($rawMonthlyTotals[$i]) ? (float) $rawMonthlyTotals[$i] : 0;
+		}
+
+
+		$warehouseData = Warehouse::whereNull('deleted_at')
+							->selectRaw('SUM(remain) as remain, SUM(ng) as ng')
+							->first();
+	
+		$saleData = Sale::whereNull('deleted_at')
+						->selectRaw('SUM(qty) as sale')
+						->first();
+		
 		$data = [
 			"current_day_sale" => $res,
 			"day_total" => $dayTotal,
@@ -65,6 +92,8 @@ class DashboardRepository implements DashboardInterface
 			"month_total" => $monthTotal,
 			"current_year_sale" => $res2,
 			"year_total" => $yearTotal,
+			"bar_data" => [$monthlyTotals],
+			"pie_data" => [$warehouseData['remain'],$warehouseData['ng'],$saleData['sale']]
 		];
 		if (count($data) > 0) {
 			return $data;
