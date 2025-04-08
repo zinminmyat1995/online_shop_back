@@ -67,3 +67,5 @@ Route::delete('/warehouse/instock-delete',[App\Http\Controllers\ApiControllers\I
 Route::get('/history/search',[App\Http\Controllers\ApiControllers\HistoryController::class,"search"]);
 
 Route::get('/dashboard/all-data',[App\Http\Controllers\ApiControllers\DashboardController::class,"getAllData"]);
+
+Route::get('/storage/search',[App\Http\Controllers\ApiControllers\DashboardController::class,"getStorage"]);

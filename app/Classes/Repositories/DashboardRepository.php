@@ -102,4 +102,24 @@ class DashboardRepository implements DashboardInterface
 		}
 	}
 
+
+	function getStorage($login_id){
+		
+
+		$databaseName = env('DB_DATABASE');
+
+		$size = DB::select("
+			SELECT table_schema AS 'database', 
+				   ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS 'size_mb'
+			FROM information_schema.tables 
+			WHERE table_schema = ?
+			GROUP BY table_schema
+		", [$databaseName]);
+
+		$databaseSize = $size[0]->size_mb ?? 0;
+		$percentage = ($databaseSize / 5120) * 100;
+		return $percentage;
+
+	}
+
 }

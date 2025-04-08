@@ -31,4 +31,15 @@ class DashboardController extends Controller
 		}
 
 	}    
+
+	public function getStorage(Request $request)
+	{
+		$login_id = $request->login_id;
+		$res=$this->repository->getStorage($login_id);
+
+		if($res){
+			return response()->json(['status' => 'OK', 'data' => $res], 200);
+		}
+		return response()->json(['status' => 'NG', 'message' => "Fail to search!"], 200);
+	}
 }
