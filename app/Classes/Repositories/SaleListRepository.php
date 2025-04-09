@@ -25,14 +25,16 @@ class SaleListRepository implements SaleListInterface
 				->join('customer', 'customer.id', '=', 'sale.customer_id')
 				->leftJoin('payment', 'payment.id', '=', 'customer.payment_id')
 				->whereBetween('sale.updated_at', [$from_date, $to_date])
+				->orderBy('sale.updated_at', 'desc') // ensure latest sale is first
 				->select(
 					'sale.*',
 					'customer.*',
 					'payment.name as payment_name'
 					) 
 				->get()
+				->unique('customer_id') // filter only unique customer_id
+				->values()
 				->toArray();
-
 
         if (count($res) > 0) {
             return $res;
