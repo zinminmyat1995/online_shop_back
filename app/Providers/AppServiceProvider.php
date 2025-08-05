@@ -95,10 +95,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if ($this->app->environment('local')) {
+        logger('AppServiceProvider booted. Environment: ' . app()->environment());
+
+        if ($this->app->isLocal()) {
+            logger('Registering CollisionServiceProvider');
             $this->app->register(\NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider::class);
         }
     }
+
 
     
 }
