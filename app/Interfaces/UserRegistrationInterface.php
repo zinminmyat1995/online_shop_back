@@ -7,9 +7,9 @@ interface UserRegistrationInterface
 	function login($code,$password);
 	
 	// save user data 
-	function save($name, $email, $phone_no,$address,$password,$login_id);
+	// function save($name, $email, $phone_no,$address,$password,$login_id);
 
-	// reset password
-	function resetPassword($code, $password, $login_id );
+	// // reset password
+	// function resetPassword($code, $password, $login_id );
 	
 }

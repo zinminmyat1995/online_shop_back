@@ -4,7 +4,17 @@ namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Classes\Repositories\MenuRepository;
 use App\Classes\Repositories\UserRegistrationRepository;
+
+
+
+
+
+
+
+
+
 use App\Classes\Repositories\UserListRepository;
 use App\Classes\Repositories\ProductRegistrationRepository;
 use App\Classes\Repositories\ProductListRepository;
@@ -22,7 +32,17 @@ use App\Classes\Repositories\SaleListRepository;
 use App\Classes\Repositories\HistoryRepository;
 use App\Classes\Repositories\DashboardRepository;
 
+
+
+
+
+
+use App\Interfaces\{MenuInterface};
 use App\Interfaces\{UserRegistrationInterface};
+
+
+
+
 use App\Interfaces\{UserListInterface};
 use App\Interfaces\{ProductRegistrationInterface};
 use App\Interfaces\{ProductListInterface};
@@ -47,7 +67,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(MenuInterface::class,MenuRepository::class); 
         $this->app->bind(UserRegistrationInterface::class,UserRegistrationRepository::class); 
+
+
+        
         $this->app->bind(UserListInterface::class,UserListRepository::class); 
         $this->app->bind(ProductRegistrationInterface::class,ProductRegistrationRepository::class); 
         $this->app->bind(ProductListInterface::class,ProductListRepository::class); 

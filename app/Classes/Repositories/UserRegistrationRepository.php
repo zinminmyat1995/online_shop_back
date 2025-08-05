@@ -32,37 +32,37 @@ class UserRegistrationRepository implements UserRegistrationInterface
        
 	}
 
-	function  save($name, $email, $phone_no,$address,$password,$login_id){
-		$res = User::where('deleted_at', null)->get()->toArray();
-		$data = [
-			"code" => 10000 + count($res) + 1,
-			"name" => $name,
-			"email" => $email,
-			"phone_no" => $phone_no,
-			"address" => $address,
-			"password" => $password,
-			"created_id" => $login_id,
-			"updated_id" => $login_id,
-			"created_at" => Carbon::now(),
-			"updated_at" => Carbon::now()
-		];
+	// function  save($name, $email, $phone_no,$address,$password,$login_id){
+	// 	$res = User::where('deleted_at', null)->get()->toArray();
+	// 	$data = [
+	// 		"code" => 10000 + count($res) + 1,
+	// 		"name" => $name,
+	// 		"email" => $email,
+	// 		"phone_no" => $phone_no,
+	// 		"address" => $address,
+	// 		"password" => $password,
+	// 		"created_id" => $login_id,
+	// 		"updated_id" => $login_id,
+	// 		"created_at" => Carbon::now(),
+	// 		"updated_at" => Carbon::now()
+	// 	];
 
-        $shopInsert = User::insert($data);
+    //     $shopInsert = User::insert($data);
         
-        return true;
-    }
+    //     return true;
+    // }
 
-	function resetPassword($code, $password, $login_id ){
-		$results = User::where('deleted_at', null)
-        ->where('code',$code)
-        ->update([
-            'password' => $password,
-			"updated_id" => $login_id,
-            "updated_at"     => now()
-        ]);
+	// function resetPassword($code, $password, $login_id ){
+	// 	$results = User::where('deleted_at', null)
+    //     ->where('code',$code)
+    //     ->update([
+    //         'password' => $password,
+	// 		"updated_id" => $login_id,
+    //         "updated_at"     => now()
+    //     ]);
 
-        return $results;
-	}
+    //     return $results;
+	// }
 
 	
 }
